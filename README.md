@@ -3,8 +3,6 @@
 
 # Cyber Defense Competition (CCDC) Linux Bash Scripting Repository
 
-![CCDC Logo](ccdc_logo.png)
-
 Welcome to the CCDC Linux Bash Scripting Repository! This repository contains a collection of Bash scripts designed to help participants in Cyber Defense Competitions (CCDC) and anyone interested in securing Linux systems and firewalls, managing users, and automating tasks with crontab. These scripts are here to make your life easier as you defend, secure, and maintain your Linux systems.
 
 ## Table of Contents
@@ -48,12 +46,12 @@ To use these scripts, follow these general steps:
 
 1. Clone this repository to your Linux system:
    ```bash
-   git clone https://github.com/your-username/ccdc-linux-scripts.git
+   git clone https://github.com/ptcc-ccdc/LinuxServerSEC.git
    ```
 
 2. Navigate to the repository directory:
    ```bash
-   cd ccdc-linux-scripts
+   cd LinuxServerSEC
    ```
 
 3. Make the desired script executable:
