@@ -167,6 +167,18 @@ do
     fi
 done
 
+# Define the login banner message
+banner_message="*******************************************************************************
+* WARNING: This is a Company server. Unauthorized access is prohibited. *
+* All access attempts are logged. Please log in only if authorized.       *
+* Unauthorized access will be prosecuted to the full extent of the law.  *
+*******************************************************************************"
+
+# Write the banner message to /etc/motd
+echo "$banner_message" > /etc/motd
+
+echo "Login banner message has been set in /etc/motd."
+
 # Disables the ability to load new modules
 sysctl -w kernel.modules_disabled=1
 echo 'kernel.modules_disabled=1' > /etc/sysctl.conf
