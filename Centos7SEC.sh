@@ -40,6 +40,15 @@ yum update -y --security
 
 echo "Repository metadata cleaned, repositories updated, and security packages installed."
 
+# Install security tools
+yum install -y firewalld fail2ban rkhunter chkrootkit clamav
+
+# Install and configure ClamAV antivirus
+yum install clamav-daemon clamav-scanner-systemd -y
+systemctl enable clamav-daemon
+freshclam
+clamscan -r /
+
 # Check if firewalld is installed
 if ! rpm -q firewalld; then
   echo "Firewalld is not installed. Installing..."
@@ -58,6 +67,13 @@ firewall-cmd --reload
 
 # Display a message
 echo "Password for root has been changed, and firewalld is configured to allow HTTP on port 80 only."
+
+# Secure file permissions
+chmod 600 /etc/shadow
+chmod 400 /etc/passwd
+chmod 644 /etc/ssh/sshd_config
+chown root:root /etc/shadow
+chown root:root /etc/passwd
 
 # Stop the SSH service
 systemctl stop sshd
@@ -100,6 +116,16 @@ fi
 
 # Set SELinux to the most secure "Enforcing" mode
 sed -i 's/SELINUX=permissive/SELINUX=enforcing/' /etc/selinux/config
+
+# Configure system logging
+sed -i 's/auth.info;mail.none/auth.info;mail.warning/g' /etc/rsyslog.conf
+systemctl restart rsyslog
+
+# Create system audit logs
+auditctl -w /etc/passwd -p wa
+auditctl -w /etc/shadow -p wa
+auditctl -w /etc/ssh/sshd_config -p wa
+auditctl -w /etc/rsyslog.conf -p wa
 
 # Formatted output
 becho() {
@@ -144,6 +170,9 @@ done
 # Disables the ability to load new modules
 sysctl -w kernel.modules_disabled=1
 echo 'kernel.modules_disabled=1' > /etc/sysctl.conf
+
+# Display completion message
+echo "Server hardening script completed. Please review and adapt as needed."
 
 # Reboot the server to apply changes
 reboot

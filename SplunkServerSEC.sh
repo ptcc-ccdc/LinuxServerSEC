@@ -148,6 +148,13 @@ becho() {
     echo "$(tput bold)$1...$(tput sgr0)"
 }
 
+# Set strong password policy
+echo "minlen=12" >> /etc/pam.d/common-password
+echo "ucredit=-1" >> /etc/pam.d/common-password
+echo "lcredit=-1" >> /etc/pam.d/common-password
+echo "dcredit=-1" >> /etc/pam.d/common-password
+echo "difok=4" >> /etc/pam.d/common-password
+
 declare -A osInfo;
 osInfo[/etc/redhat-release]="yum install -y"
 osInfo[/etc/debian_version]="apt install -y"
