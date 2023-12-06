@@ -24,6 +24,13 @@ Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/b
 %users ALL=(ALL) /usr/bin/whoami, /usr/bin/uptime, /usr/bin/date, /usr/bin/df
 EOF
 
+# Set strong password policy
+echo "minlen=12" >> /etc/pam.d/common-password
+echo "ucredit=-1" >> /etc/pam.d/common-password
+echo "lcredit=-1" >> /etc/pam.d/common-password
+echo "dcredit=-1" >> /etc/pam.d/common-password
+echo "difok=4" >> /etc/pam.d/common-password
+
 # Make the sudoers file immutable to prevent changes
 chattr +i /etc/sudoers.d/basic_access
 
